@@ -1,2 +1,7 @@
 # Neiland85.github.io
-Origen de GitHub Pages: robots.txt del subdominio. No es un site público.
+
+User site mínimo para servir `robots.txt` en el origen `https://neiland85.github.io/`.
+
+- `Disallow: /soler-y-mata/` — no rastrear la demo.
+- La portada lleva `noindex, nofollow`.
+- No es un site público ni un portfolio.
