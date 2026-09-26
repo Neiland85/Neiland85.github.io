@@ -1,0 +1,41 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/systems/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "defineWpConfigConsts",
+      "consts": {
+        "WP_DEBUG": true,
+        "WP_DEBUG_DISPLAY": true,
+        "WP_DISABLE_FATAL_ERROR_HANDLER": true
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "astra"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/mu-plugins"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/astra-free-lab.php",
+      "data": "<?php\nadd_action('wp_head', function(){ ?>\n<style>\n:root{--paper:#f4f0e8;--ink:#171713;--pine:#1f4d47;--steel:#6f6a62;--rule:#d4cec3}\nhtml,body{background:var(--paper)!important;color:var(--ink)!important}\n.lab{max-width:1120px;margin:auto;padding:48px 28px 80px}.lab h1{font:500 clamp(3rem,7vw,6rem)/.94 Outfit,system-ui,sans-serif;letter-spacing:-.045em;margin:.3em 0}.lab p{max-width:680px;color:var(--steel);font:400 1.08rem/1.55 Outfit,system-ui,sans-serif}.labgrid{margin-top:64px;border-top:1px solid var(--rule)}.row{display:grid;grid-template-columns:1fr 380px;gap:48px;min-height:340px;padding:38px 0;border-bottom:1px solid var(--rule);align-items:center}.copy h2{font:460 clamp(2.2rem,4vw,3.4rem)/1 Newsreader,Georgia,serif;margin:.35em 0}.tag{font:600 .7rem/1 Outfit,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--pine)}\n.stage{height:300px;position:relative;display:grid;place-items:center;perspective:1000px;overflow:hidden}.axis{width:1px;height:210px;background:linear-gradient(transparent,rgba(31,77,71,.8),transparent);position:absolute}.obj{width:160px;height:160px;position:relative;transform-style:preserve-3d;animation:spin 12s linear infinite}.ring{position:absolute;inset:12px;border:1px solid rgba(31,77,71,.72);border-radius:50%;box-shadow:0 0 16px rgba(31,77,71,.12)}.r2{inset:28px;transform:rotateX(70deg)}.r3{inset:2px;transform:rotateY(70deg)}.core{position:absolute;inset:54px;border:1px solid rgba(31,77,71,.9);background:rgba(31,77,71,.04);box-shadow:0 0 35px rgba(31,77,71,.15),inset 0 0 18px rgba(31,77,71,.12)}.scan{position:absolute;left:4px;right:4px;height:1px;top:30%;background:rgba(31,77,71,.8);box-shadow:0 0 10px rgba(31,77,71,.5);animation:scan 3s ease-in-out infinite}.glitch{position:absolute;inset:0;opacity:.2;animation:glitch 7s steps(1,end) infinite}.glitch:before,.glitch:after{content:'';position:absolute;left:15%;right:15%;height:1px;background:rgba(31,77,71,.7)}.glitch:before{top:35%}.glitch:after{top:66%}.floor{position:absolute;width:170px;height:30px;border:1px solid rgba(31,77,71,.22);border-radius:50%;bottom:24px;transform:rotateX(70deg)}\n.row:nth-child(2) .core{border-radius:10px;transform:translateZ(18px)}.row:nth-child(2) .ring{border-radius:14%}.row:nth-child(3) .r2{transform:rotateY(70deg)}.row:nth-child(3) .r3{transform:rotateX(70deg) rotateY(25deg)}.row:nth-child(3) .core{border-radius:50%}.row:nth-child(4) .core{inset:42px 54px;transform:translateZ(25px)}.row:nth-child(4) .r3{transform:rotateY(65deg)}\n@keyframes spin{to{transform:rotateY(360deg) rotateX(5deg)}}@keyframes scan{0%,100%{top:25%;opacity:.25}50%{top:75%;opacity:.9}}@keyframes glitch{0%,88%,100%{transform:none;opacity:.15}89%{transform:translateX(4px) skewX(7deg);opacity:.75}90%{transform:translateX(-3px);opacity:.35}}\n@media(max-width:800px){.row{grid-template-columns:1fr}.stage{height:250px;order:2}.copy{order:1}}@media(prefers-reduced-motion:reduce){.obj,.scan,.glitch{animation:none}.obj{transform:rotateY(28deg) rotateX(5deg)}}\n</style>\n<?php });\n"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire_once '/wordpress/wp-load.php';\n\n$content = <<<'HTML'\n<div class=\"lab\">\n  <div class=\"tag\">Astra Free Lab · Browser Debug</div>\n  <h1>Systems Architecture</h1>\n  <p>Arquitectura que se puede inspeccionar. Límites, contratos, trazabilidad y comportamiento verificable.</p>\n  <div class=\"labgrid\">\n    <article class=\"row\"><div class=\"copy\"><div class=\"tag\">01 · Domain driven design</div><h2>DDD</h2><p>Modelado por dominio, límites explícitos y contratos que permiten separar responsabilidades sin ocultarlas.</p></div><div class=\"stage\" aria-hidden=\"true\"><div class=\"axis\"></div><div class=\"obj\"><div class=\"ring\"></div><div class=\"ring r2\"></div><div class=\"ring r3\"></div><div class=\"core\"></div><div class=\"glitch\"></div><div class=\"scan\"></div></div><div class=\"floor\"></div></div></article>\n    <article class=\"row\"><div class=\"copy\"><div class=\"tag\">02 · Runtime systems</div><h2>Backend</h2><p>TypeScript/Node, Python/FastAPI y Java/Spring aplicados a sistemas con foco en operación y mantenibilidad.</p></div><div class=\"stage\" aria-hidden=\"true\"><div class=\"axis\"></div><div class=\"obj\"><div class=\"ring\"></div><div class=\"ring r2\"></div><div class=\"ring r3\"></div><div class=\"core\"></div><div class=\"glitch\"></div><div class=\"scan\"></div></div><div class=\"floor\"></div></div></article>\n    <article class=\"row\"><div class=\"copy\"><div class=\"tag\">03 · Controlled failure</div><h2>Resilience</h2><p>Idempotencia, eventos, límites de ritmo y comportamiento determinista donde la repetición o la pérdida importan.</p></div><div class=\"stage\" aria-hidden=\"true\"><div class=\"axis\"></div><div class=\"obj\"><div class=\"ring\"></div><div class=\"ring r2\"></div><div class=\"ring r3\"></div><div class=\"core\"></div><div class=\"glitch\"></div><div class=\"scan\"></div></div><div class=\"floor\"></div></div></article>\n    <article class=\"row\"><div class=\"copy\"><div class=\"tag\">04 · Verifiable artifacts</div><h2>Evidence</h2><p>Artefactos verificables, hashes, manifests, proof bundles y salidas pensadas para revisión técnica.</p></div><div class=\"stage\" aria-hidden=\"true\"><div class=\"axis\"></div><div class=\"obj\"><div class=\"ring\"></div><div class=\"ring r2\"></div><div class=\"ring r3\"></div><div class=\"core\"></div><div class=\"glitch\"></div><div class=\"scan\"></div></div><div class=\"floor\"></div></div></article>\n  </div>\n</div>\nHTML;\n\n$page = get_page_by_path('systems', OBJECT, 'page');\n$post = [\n  'ID' => $page ? $page->ID : 0,\n  'post_title' => 'Systems Architecture',\n  'post_name' => 'systems',\n  'post_content' => $content,\n  'post_status' => 'publish',\n  'post_type' => 'page'\n];\n$id = wp_insert_post($post, true);\nif (is_wp_error($id)) {\n  error_log('ASTRA LAB ERROR: '.$id->get_error_message());\n  throw new Exception($id->get_error_message());\n}\nupdate_option('show_on_front', 'page');\nupdate_option('page_on_front', (int) $id);\nupdate_option('blogname', 'Neil Muñoz Lago — Systems Architecture');\n"
+    }
+  ]
+}
