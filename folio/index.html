@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neil Muñoz · Folio</title>
+<meta name="description" content="Folio de dos clics. Neil Muñoz Lago, arquitecto de sistemas. Clarity Structures Digital S.L.">
+<meta name="theme-color" content="#F4F0E8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,460;6..72,560&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f0e8;
+    --ink: #1b1914;
+    --pine: #1f4d47;
+    --steel: #6f6a62;
+    --rule: #d4cec3;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: Outfit, ui-sans-serif, system-ui, sans-serif; text-rendering: optimizeLegibility; }
+  button, a { font: inherit; }
+  button { cursor: pointer; }
+  ::selection { background: var(--pine); color: var(--paper); }
+  :focus-visible { outline: 2px solid var(--pine); outline-offset: 3px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .view { min-height: 100dvh; display: flex; flex-direction: column; }
+  .pad { padding: 1.5rem 1.25rem; }
+  @media (min-width: 640px) { .pad { padding: 2rem 2.5rem; } }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .kicker { margin: 0; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); font-weight: 500; }
+  .mark { display: inline-flex; align-items: flex-end; gap: 0.25rem; }
+  .mark i { display: block; width: 0.25rem; }
+  .mark i:nth-child(1) { height: 1rem; background: var(--pine); }
+  .mark i:nth-child(2) { height: 1.5rem; background: var(--ink); }
+  .mark i:nth-child(3) { height: 0.75rem; background: var(--steel); }
+  .brand { display: flex; align-items: center; gap: 0.75rem; }
+  .grow { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 4rem 0 2rem; }
+  @media (min-width: 640px) { .grow { justify-content: center; padding: 0; } }
+  .role { margin: 0 0 1rem; color: var(--pine); font-size: 0.875rem; }
+  h1 { margin: 0; max-width: 64rem; font-family: Outfit, sans-serif; font-weight: 500; font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 1; letter-spacing: -0.02em; }
+  .firm { margin: 1.5rem 0 0; max-width: 36rem; font-size: 1.25rem; line-height: 1.3; }
+  .ruleline { margin: 0.75rem 0 0; max-width: 28rem; color: var(--steel); line-height: 1.5; }
+  footer.bar { border-top: 1px solid var(--rule); padding-top: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+  @media (min-width: 640px) { footer.bar { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+  .contacts { display: flex; flex-direction: column; font-size: 0.875rem; }
+  .contacts a { color: var(--ink); min-height: 2.75rem; display: flex; align-items: center; text-decoration: none; }
+  .contacts a.quiet { color: var(--steel); }
+  .actions { display: flex; flex-direction: column; gap: 0.75rem; }
+  @media (min-width: 640px) { .actions { flex-direction: row; align-items: center; } }
+  .wa, .go {
+    min-height: 3rem; display: inline-flex; align-items: center; justify-content: center;
+    padding: 0 1.25rem; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; text-decoration: none;
+  }
+  .wa { border: 1px solid var(--ink); color: var(--ink); background: var(--paper); }
+  .go { border: 0; background: var(--pine); color: var(--paper); gap: 2rem; justify-content: space-between; }
+  .back { background: none; border: 0; color: var(--steel); min-height: 2.75rem; padding: 0; text-decoration: underline; text-underline-offset: 4px; }
+  h2 { margin: 0; font-family: Newsreader, Georgia, serif; font-weight: 460; font-size: clamp(2.4rem, 5vw, 3.5rem); line-height: 1; }
+  .lead { margin: 0.75rem 0 0; max-width: 32rem; color: var(--steel); font-size: 0.875rem; line-height: 1.5; }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--rule); flex: 1; }
+  @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .grid li { border-bottom: 1px solid var(--rule); }
+  @media (min-width: 768px) { .grid li:nth-child(odd) { border-right: 1px solid var(--rule); } }
+  .card {
+    width: 100%; height: 100%; min-height: 11rem; text-align: left; background: transparent; border: 0; color: inherit;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 1.25rem;
+  }
+  @media (min-width: 640px) { .card { padding: 2rem; } }
+  .card:hover { background: var(--pine); color: var(--paper); }
+  .card .top, .card .idx { display: flex; width: 100%; justify-content: space-between; align-items: baseline; }
+  .idx { font-family: Newsreader, Georgia, serif; letter-spacing: 0.12em; font-size: 0.875rem; }
+  .st { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .card h3 { margin: 0; font-family: Newsreader, Georgia, serif; font-weight: 460; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; }
+  .card p { margin: 0.75rem 0 0; max-width: 24rem; font-size: 0.875rem; line-height: 1.5; opacity: 0.8; }
+  article { width: 100%; max-width: 48rem; margin: 0 auto; padding: 0 1.25rem 2.5rem; display: flex; flex-direction: column; flex: 1; }
+  @media (min-width: 640px) { article { padding: 0 2.5rem 2.5rem; } }
+  .meta { margin: 0; color: var(--pine); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  .phrase { margin: 1.25rem 0 0; max-width: 36rem; font-size: 1.125rem; line-height: 1.35; }
+  dl { margin: 2.5rem 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .line { display: grid; gap: 0.5rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+  .line:first-child { border-top: 0; }
+  @media (min-width: 640px) { .line { grid-template-columns: 8rem 1fr; gap: 2rem; } }
+  dt { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); }
+  dd { margin: 0; line-height: 1.5; }
+  .check { display: block; margin-bottom: 0.5rem; color: var(--pine); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .note { margin: 1.5rem 0 0; max-width: 36rem; color: var(--steel); font-size: 0.875rem; line-height: 1.5; }
+  .sheetfoot { margin-top: auto; padding-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  @media (min-width: 640px) { .sheetfoot { flex-direction: row; align-items: center; justify-content: space-between; } }
+  .sheetfoot span { color: var(--steel); font-size: 0.875rem; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<p class="sr" id="live" aria-live="polite">Portada</p>
+<main id="app"></main>
+<script>
+const IDENTITY = {
+  name: "Neil Muñoz Lago",
+  role: "Arquitecto de sistemas",
+  firm: "Clarity Structures Digital S.L.",
+  city: "Madrid",
+  email: "admin@claritystructures.com",
+  phone: "+34 638 490 985",
+  rule: "La IA propone. El arquitecto decide. El repositorio prueba."
+};
+const WA = "https://wa.me/34638490985";
+const LINES = [
+  { id: "pericia", index: "01", title: "Pericia", phrase: "Paquete que un letrado puede revisar.", status: "Activo", what: "Peritaje informático para un despacho: alcance escrito, paquete técnico-documental y acceso nominativo. Quien abre el material queda identificado. No es una auditoría genérica ni un archivo suelto.", forWhom: "Un letrado que necesita evidencia revisable sin perder el control de quién accede.", now: "Línea abierta a encargo. El procedimiento concreto no se nombra aquí." },
+  { id: "intake", index: "02", title: "Intake", phrase: "Entrada gobernada. Si no cierra, no entra.", status: "Capacidad", what: "Clarity Structures: intake con decisión reproducible, límite de ritmo e idempotencia. El formulario no es el producto; la regla de admisión sí.", forWhom: "Operaciones que no pueden perder una entrada ni aceptarla dos veces.", now: "Regla de admisión reproducible. Límite de ritmo e idempotencia. No hay un sistema desplegado." },
+  { id: "fuente", index: "03", title: "Fuente", phrase: "La cita vuelve al documento. No se redacta nada.", status: "Capacidad", what: "Cada ficha fija una afirmación, quién la sostiene, la cita literal, la URL permanente, lo que esa ficha no permite afirmar y el ancla al documento origen.", forWhom: "Quien publica y tiene que volver a la frase exacta sin reconstruir el expediente.", now: "Un lote, una disciplina, salida JSONL y SHA-256. Sin ranking, sin score, sin línea editorial." },
+  { id: "contrata", index: "04", title: "Contrata", phrase: "Antes del papel, una pieza que se puede mirar.", status: "Antes", what: "", forWhom: "", now: "Si la pieza no encaja, no hay contrato. La verificación no se descuenta del trabajo: es el filtro.", steps: [
+    { n: "01", title: "Alcance", body: "Se escribe la unidad: qué se fija y qué no se afirma. Sin ese límite no hay paso siguiente." },
+    { n: "02", title: "Verificación", body: "Una pieza corta, no el encargo. Basta para ver el oficio y si hay conexión en la ejecución técnica.", check: true },
+    { n: "03", title: "Papel", body: "El contrato cubre esa misma unidad, con el límite que la verificación ya enseñó." }
+  ]}
+];
+
+const app = document.getElementById("app");
+const live = document.getElementById("live");
+let view = "cover";
+let openId = null;
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, (c) => {
+    if (c === "&") return "&" + "amp;";
+    if (c === "<") return "&" + "lt;";
+    if (c === ">") return "&" + "gt;";
+    return "&" + "quot;";
+  });
+}
+function wa() {
+  return '<a class="wa" href="' + WA + '" target="_blank" rel="noopener noreferrer">WhatsApp</a>';
+}
+
+function render() {
+  if (view === "cover") {
+    live.textContent = "Portada";
+    app.innerHTML =
+      '<section class="view pad">' +
+        '<header class="row"><div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><p class="kicker">Folio 01</p></div><p class="kicker">' + esc(IDENTITY.city) + '</p></header>' +
+        '<div class="grow"><p class="role">' + esc(IDENTITY.role) + '</p><h1>' + esc(IDENTITY.name) + '</h1><p class="firm">' + esc(IDENTITY.firm) + '</p><p class="ruleline">' + esc(IDENTITY.rule) + '</p></div>' +
+        '<footer class="bar"><div class="contacts"><a href="mailto:' + esc(IDENTITY.email) + '">' + esc(IDENTITY.email) + '</a><a class="quiet" href="tel:+34638490985">' + esc(IDENTITY.phone) + '</a></div><div class="actions">' + wa() + '<button class="go" type="button" data-go="board">Entrar al tablero <span aria-hidden="true">01 →</span></button></div></footer>' +
+      '</section>';
+    return;
+  }
+  if (view === "board") {
+    live.textContent = "Tablero, primer clic";
+    app.innerHTML =
+      '<section class="view">' +
+        '<header class="row pad"><button class="back" type="button" data-go="cover">← Portada</button><p class="kicker">Clic 1 de 2</p></header>' +
+        '<div class="pad" style="padding-top:0"><h2>Lo que está abierto</h2><p class="lead">Cuatro líneas. Elige una. El segundo clic abre la ficha, no un repositorio.</p></div>' +
+        '<ul class="grid">' + LINES.map((line) =>
+          '<li><button class="card" type="button" data-open="' + esc(line.id) + '"><span class="top"><span class="idx">' + esc(line.index) + '</span><span class="st">' + esc(line.status) + '</span></span><span><h3>' + esc(line.title) + '</h3><p>' + esc(line.phrase) + '</p></span></button></li>'
+        ).join("") + '</ul>' +
+      '</section>';
+    return;
+  }
+  const line = LINES.find((item) => item.id === openId);
+  if (!line) { view = "board"; render(); return; }
+  live.textContent = "Ficha " + line.title + ", segundo clic";
+  const body = line.steps
+    ? line.steps.map((step) =>
+        '<div class="line"><dt>' + esc(step.n) + " " + esc(step.title) + '</dt><dd>' +
+        (step.check ? '<span class="check">La pieza corta</span>' : "") + esc(step.body) + '</dd></div>'
+      ).join("") + '<p class="note">' + esc(line.now) + '</p>'
+    : [
+        ["Qué es", line.what],
+        ["Para quién", line.forWhom],
+        ["Ahora", line.now]
+      ].map(([label, text]) => '<div class="line"><dt>' + esc(label) + '</dt><dd>' + esc(text) + '</dd></div>').join("");
+  app.innerHTML =
+    '<section class="view">' +
+      '<header class="row pad"><button class="back" type="button" data-go="board">← Tablero</button><p class="kicker">Clic 2 de 2</p></header>' +
+      '<article><p class="meta">' + esc(line.index) + " · " + esc(line.status) + '</p><h2>' + esc(line.title) + '</h2><p class="phrase">' + esc(line.phrase) + '</p><dl>' + body + '</dl><footer class="sheetfoot"><span>' + esc(IDENTITY.firm) + '</span>' + wa() + '</footer></article>' +
+    '</section>';
+}
+
+app.addEventListener("click", (event) => {
+  const go = event.target.closest("[data-go]");
+  const open = event.target.closest("[data-open]");
+  if (go) { view = go.getAttribute("data-go"); render(); }
+  if (open) { openId = open.getAttribute("data-open"); view = "sheet"; render(); }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && view === "cover") { view = "board"; render(); }
+  if (event.key === "Escape") {
+    if (view === "sheet") view = "board";
+    else if (view === "board") view = "cover";
+    else return;
+    render();
+  }
+});
+render();
+</script>
+</body>
+</html>
