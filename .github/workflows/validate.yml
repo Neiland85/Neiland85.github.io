@@ -1,0 +1,124 @@
+name: Validate repository
+
+on:
+  push:
+    branches:
+      - main
+      - 'chore/**'
+      - 'feat/**'
+      - 'fix/**'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON blueprints
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          found=0
+
+          while IFS= read -r -d '' file; do
+            found=1
+            echo "Validating: $file"
+            python -m json.tool "$file" >/dev/null
+          done < <(find playground -type f -name '*.json' -print0)
+
+          if [ "$found" -eq 0 ]; then
+            echo "ERROR: no JSON blueprints found under playground/"
+            exit 1
+          fi
+
+      - name: Validate canonical Astra blueprint
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("playground/astra-free-portfolio-v15.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+
+          assert data.get("landingPage") == "/systems/", (
+              f"Unexpected landingPage: {data.get('landingPage')!r}"
+          )
+
+          raw = path.read_text(encoding="utf-8")
+
+          assert "A4CO" not in raw, "A4CO reference found in canonical blueprint"
+
+          required_blocks = ["Pericia", "Intake", "Fuente", "Contrata"]
+          missing = [block for block in required_blocks if block not in raw]
+
+          assert not missing, (
+              f"Operating blocks missing from canonical blueprint: {missing}"
+          )
+
+          print(f"Canonical blueprint OK: {path}")
+          print(f"Size: {path.stat().st_size} bytes")
+          PY
+
+      - name: Check repository hygiene
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git ls-files -ci --exclude-standard | grep -q .; then
+            echo "ERROR: tracked files are being ignored by .gitignore:"
+            git ls-files -ci --exclude-standard
+            exit 1
+          fi
+
+          echo "Repository hygiene OK"
+
+      - name: Check for obvious secret material
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          patterns=(
+            'ghp_[A-Za-z0-9_]{20,}'
+            'github_pat_[A-Za-z0-9_]{20,}'
+            'xox[baprs]-[A-Za-z0-9-]{20,}'
+            'sk-[A-Za-z0-9_-]{20,}'
+          )
+
+          for pattern in "${patterns[@]}"; do
+            if git grep -I -qE "$pattern" -- .; then
+              echo "ERROR: possible credential pattern detected"
+              exit 1
+            fi
+          done
+
+          echo "No obvious credential patterns detected"
+
+      - name: Check sensitive filenames
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git ls-files | grep -Ei \
+            '(^|/)(\.env($|\.)|.*secret.*|.*credential.*|.*password.*|.*token.*|.*private.*|.*\.pem$|.*\.key$|.*\.p12$|.*\.pfx$)' \
+            >/dev/null; then
+            echo "ERROR: sensitive-looking tracked filename detected"
+            git ls-files | grep -Ei \
+              '(^|/)(\.env($|\.)|.*secret.*|.*credential.*|.*password.*|.*token.*|.*private.*|.*\.pem$|.*\.key$|.*\.p12$|.*\.pfx$)'
+            exit 1
+          fi
+
+          echo "No sensitive-looking tracked filenames detected"
+
+      - name: Git status
+        run: git status --short --branch

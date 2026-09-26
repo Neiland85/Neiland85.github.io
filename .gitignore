@@ -1,0 +1,31 @@
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment / local secrets
+.env
+.env.*
+!.env.example
+
+# Credentials / private keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# Local tooling / editor state
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local Vercel state
+.vercel/
+
+# Logs / local runtime output
+*.log
